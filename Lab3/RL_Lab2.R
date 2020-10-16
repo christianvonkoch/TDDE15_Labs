@@ -8,6 +8,7 @@
 
 # install.packages("keras")
 library(keras)
+library(tensorflow)
 
 # install.packages("ggplot2")
 # install.packages("vctrs")
