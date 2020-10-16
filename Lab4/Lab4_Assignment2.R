@@ -69,8 +69,9 @@ l=0.2
 SEkernel = NestedSquaredExpKernel(sigmaF, l)
 model = gausspr(time, temp, kernel=SEkernel, var=sigmaN^2)
 predictedMean=predict(model, newdata=time)
-plot(time, predictedMean, type="l", lwd=2, main="Posterior mean of temperature at different time points",
-     xlab="Time", ylab="Temp", col="red")
+plot(time, temp, type="p", main="Time vs temperature")
+lines(time, predictedMean, type="l", lwd=2, xlab="Time", ylab="Temp", col="red")
+legend("bottomright", legend=c("Data", "Predicted mean"), pch=c(1, NA), lty=c(NA, 1), lwd=c(NA, 2), col=c("black", "red"))
 
 ## 3) Kernlab can compute posterior variance of f, but it seems to be a bug in the code. So, do your own computations of the
 ## posterior variance of f and plot the 95 % probability (pointwise) bands for f. Superimpose these bands on a figure with the
@@ -88,13 +89,17 @@ posteriorGP = function(X, y, XStar, sigmaNoise, k, ...) {
   return(list(mean=predMean, var=predVar))
 }
 
-posterior = posteriorGP(scale(time), scale(temp), scale(seq(from=1, to=365*6, by=1)), sigmaN, SquaredExpKernel, sigmaF, l)
+posterior = posteriorGP(scale(time), scale(temp), scale(time), sigmaN, SquaredExpKernel, sigmaF, l)
 postVar = posterior$var
 postMean = posterior$mean
-lines(time, postMean[id]*sqrt(diag(postVar)[id])+predictedMean + 1.96*sqrt(diag(postVar)[id]), lwd=2, lty=21, col="gray")
-lines(time, postMean[id]*sqrt(diag(postVar)[id])+predictedMean -1.96*sqrt(diag(postVar)[id]), lwd=2, lty=21, col="gray")
+plot(time, temp, type="p", main="Time vs temperature")
+lines(time, predictedMean, type="l", lwd=2, xlab="Time", ylab="Temp", col="red")
+lines(time, postMean*sqrt(diag(postVar))+predictedMean + 1.96*sqrt(diag(postVar)), lwd=2, lty=21, col="gray")
+lines(time, postMean*sqrt(diag(postVar))+predictedMean -1.96*sqrt(diag(postVar)), lwd=2, lty=21, col="gray")
+legend("bottomright", legend=c("Data", "Predicted mean", "95% probability bands"), pch=c(1, NA, NA), lty=c(NA, 1, 21),
+       lwd=c(NA, 2, 2), col=c("black", "red", "grey"))
 
-## Consider now the following model: temp = f(day) + epsilon with epsilon ~ N(0, sigmaN^2) and f~GP(0, k(day, day'))
+## 4) Consider now the following model: temp = f(day) + epsilon with epsilon ~ N(0, sigmaN^2) and f~GP(0, k(day, day'))
 ## Estimate the model using the squared exponential function with sigmaF=20 and l=0.2. Superimpose the posterior mean
 ## from this model on the posterior mean from the model in (2). Note that this plot should also have time variables on the 
 ## horizontal axis. Compare the results of both models. What are the pros and cons of each model?
@@ -104,9 +109,11 @@ l=0.2
 SEkernel = NestedSquaredExpKernel(sigmaF, l)
 model2 = gausspr(day, temp, kernel=SEkernel, var=sigmaN^2)
 predictedMean2=predict(model2, newdata=day)
-plot(time, predictedMean, type="l", lwd=2, main="Posterior mean of temperature at different time points",
-     xlab="Time", ylab="Temp", col="red")
+plot(time, temp, type="p", main="Time vs temperature")
+lines(time, predictedMean, type="l", lwd=2, xlab="Time", ylab="Temp", col="red")
 lines(time, predictedMean2, type="l", lwd=2, col="blue")
+legend("bottomright", legend=c("Data", "Predicted mean time", "Predicted mean day"), pch=c(1, NA, NA), lty=c(NA, 1, 1),
+       lwd=c(NA, 2, 2), col=c("black", "red", "blue"))
 
 ## Finally, implement a generalization of the periodic kernel given in the lectures. Note that Note that we have two different
 ## length scales here, and `2 controls the correlation between the same day in different years. Estimate the GP model using the
@@ -131,5 +138,7 @@ d=365/sd(time)
 PerKernel = PeriodicKernel(sigmaF, l1, l2, d)
 model3 = gausspr(time, temp, kernel=PerKernel, var=sigmaN^2)
 predictedMean3=predict(model3, newdata=time)
-plot(time, predictedMean3, type="l", lwd=2, main="Posterior mean of temperature at different time points",
-     xlab="Time", ylab="Temp", col="green")
+lines(time, predictedMean3, type="l", lwd=2, col="green")
+legend("bottomright", legend=c("Data", "Predicted mean time", "Predicted mean day", "Periodic kernel"), 
+       pch=c(1, NA, NA, NA), lty=c(NA, 1, 1, 1),
+       lwd=c(NA, 2, 2, 2), col=c("black", "red", "blue", "green"))

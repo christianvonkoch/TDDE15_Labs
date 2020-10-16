@@ -35,7 +35,7 @@ l <- 0.3
 posteriorSim=posteriorGP(obs$x, obs$y, xTest, sigmaN, SquaredExpKernel, sigmaF, l)
 plot(xTest, posteriorSim$mean, type="l", 
      ylim=c(min(posteriorSim$mean - 1.96*sqrt(diag(posteriorSim$var))), max(posteriorSim$mean + 1.96*sqrt(diag(posteriorSim$var)))),
-     col="red", main="Plot of posterior mean with 95 % probability bands", xlab="x", ylab="Posterior mean",
+     col="red", main="Plot of posterior mean (red) with 95 % probability bands", xlab="x", ylab="Posterior mean",
      sub="One observation as prior")
 lines(xTest, posteriorSim$mean - 1.96*sqrt(diag(posteriorSim$var)), col = "gray", lwd = 2, lty=21)
 lines(xTest, posteriorSim$mean + 1.96*sqrt(diag(posteriorSim$var)), col = "gray", lwd = 2, lty=21)
@@ -48,7 +48,7 @@ obs2=data.frame(x=x, y=y)
 posteriorSim2=posteriorGP(obs2$x, obs2$y, xTest, sigmaN, SquaredExpKernel, sigmaF, l)
 plot(xTest, posteriorSim2$mean, type="l", 
      ylim=c(min(posteriorSim2$mean-1.96*sqrt(diag(posteriorSim2$var))), max(posteriorSim2$mean+1.96*sqrt(diag(posteriorSim2$var)))),
-     col="red", main="Plot of posterior mean with 95 % probability bands", xlab="x", ylab="Posterior mean",
+     col="red", main="Plot of posterior mean (red) with 95 % probability bands", xlab="x", ylab="Posterior mean",
      sub="Two observations as prior")
 lines(xTest, posteriorSim2$mean - 1.96*sqrt(diag(posteriorSim2$var)), col = "gray", lwd = 2, lty=21)
 lines(xTest, posteriorSim2$mean + 1.96*sqrt(diag(posteriorSim2$var)), col = "gray", lwd = 2, lty=21)
@@ -61,7 +61,7 @@ obs2=data.frame(x=x, y=y)
 posteriorSim2=posteriorGP(obs2$x, obs2$y, xTest, sigmaN, SquaredExpKernel, sigmaF, l)
 plot(xTest, posteriorSim2$mean, type="l", 
      ylim=c(min(posteriorSim2$mean-1.96*sqrt(diag(posteriorSim2$var))), max(posteriorSim2$mean+1.96*sqrt(diag(posteriorSim2$var)))),
-     col="red", main="Plot of posterior mean with 95 % probability bands", xlab="x", ylab="Posterior mean",
+     col="red", main="Plot of posterior mean (red) with 95 % probability bands", xlab="x", ylab="Posterior mean",
      sub="Five observations as prior")
 lines(xTest, posteriorSim2$mean - 1.96*sqrt(diag(posteriorSim2$var)), col = "gray", lwd = 2, lty=21)
 lines(xTest, posteriorSim2$mean + 1.96*sqrt(diag(posteriorSim2$var)), col = "gray", lwd = 2, lty=21)
@@ -73,7 +73,7 @@ l=1
 posteriorSim2=posteriorGP(obs2$x, obs2$y, xTest, sigmaN, SquaredExpKernel, sigmaF, l)
 plot(xTest, posteriorSim2$mean, type="l", 
      ylim=c(min(posteriorSim2$mean-1.96*sqrt(diag(posteriorSim2$var))), max(posteriorSim2$mean+1.96*sqrt(diag(posteriorSim2$var)))),
-     col="red", main="Plot of posterior mean with 95 % probability bands", xlab="x", ylab="Posterior mean",
+     col="red", main="Plot of posterior mean (red) with 95 % probability bands", xlab="x", ylab="Posterior mean",
      sub=expression(paste("Five observations as prior and ", sigma[F], "=1 and l=1")))
 lines(xTest, posteriorSim2$mean - 1.96*sqrt(diag(posteriorSim2$var)), col = "gray", lwd = 2, lty=21)
 lines(xTest, posteriorSim2$mean + 1.96*sqrt(diag(posteriorSim2$var)), col = "gray", lwd = 2, lty=21)
