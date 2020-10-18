@@ -89,15 +89,18 @@ posteriorGP = function(X, y, XStar, sigmaNoise, k, ...) {
   return(list(mean=predMean, var=predVar))
 }
 
+scale_mean=mean(temp)
+
+scale_var=sqrt(var(temp))
 posterior = posteriorGP(scale(time), scale(temp), scale(time), sigmaN, SquaredExpKernel, sigmaF, l)
 postVar = posterior$var
 postMean = posterior$mean
 plot(time, temp, type="p", main="Time vs temperature")
 lines(time, predictedMean, type="l", lwd=2, xlab="Time", ylab="Temp", col="red")
-lines(time, postMean*sqrt(diag(postVar))+predictedMean + 1.96*sqrt(diag(postVar)), lwd=2, lty=21, col="gray")
-lines(time, postMean*sqrt(diag(postVar))+predictedMean -1.96*sqrt(diag(postVar)), lwd=2, lty=21, col="gray")
-legend("bottomright", legend=c("Data", "Predicted mean", "95% probability bands"), pch=c(1, NA, NA), lty=c(NA, 1, 21),
-       lwd=c(NA, 2, 2), col=c("black", "red", "grey"))
+lines(time, postMean*scale_var+scale_mean+1.96*sqrt(diag(postVar)), lwd=2, lty=2, col="blue")
+lines(time, postMean*scale_var+scale_mean-1.96*sqrt(diag(postVar)), lwd=2, lty=2, col="blue")
+legend("bottomright", legend=c("Data", "Predicted mean", "95% probability bands"), pch=c(1, NA, NA), lty=c(NA, 1, 2),
+       lwd=c(NA, 2, 2), col=c("black", "red", "blue"))
 
 ## 4) Consider now the following model: temp = f(day) + epsilon with epsilon ~ N(0, sigmaN^2) and f~GP(0, k(day, day'))
 ## Estimate the model using the squared exponential function with sigmaF=20 and l=0.2. Superimpose the posterior mean
