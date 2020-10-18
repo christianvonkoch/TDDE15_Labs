@@ -82,6 +82,12 @@ id=sample(1:n, floor(n*0.8))
 train=asia[id,]
 test=asia[-id,]
 
+# Function for calculating marginal likelihoods for different target variables.
+# Inputs:
+# juncTree - The function tree obtained from the Laurent Spielberger algorithm
+# data - The data which will be used as a basis for the prediction
+# features - The features that should be the basis for the prediction
+# target - The target variable for which the prediction should be made
 predictNet <- function(juncTree, data, features, target){
   predArray <- matrix(nrow=nrow(data),ncol=1)
   for(i in 1:nrow(data)){
@@ -152,5 +158,5 @@ naiveConf
 
 ## 5. Explain why you obtain the same or different results in the exercises (2-4).
 
-## Markov Blanket (MB) consists of the nodes of importance for the target nodes' dependencies in the network.
+## Conclusion: Markov Blanket (MB) consists of the nodes of importance for the target nodes' dependencies in the network.
 ## If we do not change the MB, the outcome of the prediction on the target node will not change.

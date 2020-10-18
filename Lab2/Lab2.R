@@ -17,6 +17,7 @@ transitionMatrix=diag(0.5, 10)
 diag(transitionMatrix[,-1])=0.5
 transitionMatrix[10,1]=0.5
 emissionMatrix=matrix(0,10,10)
+# A loop for defining the emission matrix properly
 for(i in 1:10) {
   for (j in 1:10) {
     if((j+7-i) %% 10 >= 5) {
@@ -41,6 +42,8 @@ simulation=simHMM(HMM_model, length=100)
 obsStates=simulation$observation
 alpha=exp(forward(HMM_model, obsStates))
 beta=exp(backward(HMM_model, obsStates))
+
+# Function for calculating the filtered distribution
 calcFiltering = function(HMM, alpha, noSim) {
   filtered = matrix(0,10,noSim)
   for (i in 1:noSim) {
@@ -49,6 +52,7 @@ calcFiltering = function(HMM, alpha, noSim) {
   return(filtered)
 }
 
+# Function for calculating the smoothing distribution
 calcSmoothing = function(HMM, alpha, beta, noSim) {
   smoothed=matrix(0,10,noSim)
   alphabeta=alpha*beta
@@ -70,6 +74,7 @@ mostProbPath=viterbi(HMM_model, obsStates)
 mostProb_filtered=apply(filtered, 2, which.max)
 mostProb_smoothed=apply(smoothed, 2, which.max)
 
+# Function for calculating the accuracy of a predicted set
 calcAccuracy = function(trueState, calcState) {
   n=length(trueState)
   return(sum(trueState==calcState)/n)
@@ -85,7 +90,8 @@ acc_smoothed=calcAccuracy(states, mostProb_smoothed)
 ## the smoothed distributions should be more accurate than the most probable paths, too.
 ## Why ?
   
-
+# Function for calculating the accuracy for the filtered, smoothed and most probable path given an HMM model and the desired
+# number of simulation
 simulationHMM=function(HMM_model, noSim) {
   simulation=simHMM(HMM_model, length=noSim)
   obsStates=simulation$observation
@@ -115,7 +121,7 @@ lines(density(accMatrix[,3]), col="black")
 legend("topleft", box.lty = 1, legend = c("Most probable path","Filtered","Smoothed"), 
        col=c("red","blue","black"), lwd = 2)
 
-## Smoothed distribution more accurate in general than both the filtered and the most probable path distributions.
+## Conclusion: Smoothed distribution more accurate in general than both the filtered and the most probable path distributions.
 
 ## 6. Is it true that the more observations you have the better you know where the robot is ?
 

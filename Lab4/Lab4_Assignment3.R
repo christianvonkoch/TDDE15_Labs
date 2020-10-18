@@ -10,7 +10,7 @@ SelectTraining <- sample(1:dim(data)[1], size = 1000, replace = FALSE)
 train=data[SelectTraining,]
 test=data[-SelectTraining,]
 
-## 1) Use the R package kernlab to fit a Gaussian process classification model for fraud on the training data. Use the default kernel
+## Assignment 1: Use the R package kernlab to fit a Gaussian process classification model for fraud on the training data. Use the default kernel
 ## and hyperparameters. Start using only the covariates varWave and skewWave in the model. Plot contours of the prediction probs
 ## over a suitable grid of values of varWave and skewWave. Overlay the training data for fraud=1 (as blue points) and fraud=0
 ## (as red points). You can reuse code from the file KernLabDemo.R available on course website. Compute the confusion matrix
@@ -41,13 +41,13 @@ points(train[train[,5]==0,1],train[train[,5]==0,2],col="blue")
 confusionMatrix
 sum(diag(confusionMatrix))/sum(confusionMatrix)
 
-## 2) Using the estimated model from 1), make predictions on the test set.
+## Assignment 2: Using the estimated model from 1), make predictions on the test set.
 
 predictedTest = predict(model, newdata=test)
 confusionMatrix_test = table(predictedTest, test[,5])
 sum(diag(confusionMatrix_test))/sum(confusionMatrix_test)
 
-## 3) Train a model using all four covariates. Make predictions on the test set and compare the accuracy to the model with only two
+## Assignment 3: Train a model using all four covariates. Make predictions on the test set and compare the accuracy to the model with only two
 ## covariates
 
 model2 = gausspr(fraud ~., data=train)

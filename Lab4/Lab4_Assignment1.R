@@ -1,5 +1,8 @@
 library(mvtnorm)
 
+## Assignment 1: Implement algorithm 2.1. Write your own code for simulating from the posterior distribution of f using the squared
+## exponential kernel (f is distributed according to a gaussian process regression model). 
+
 # Covariance function
 SquaredExpKernel <- function(x1,x2,sigmaF=1,l=3){
   n1 <- length(x1)
@@ -23,7 +26,7 @@ posteriorGP = function(X, y, XStar, sigmaNoise, k, ...) {
   return(list(mean=predMean, var=predVar))
 }
 
-# 2. Plot one draw from posterior
+# Assignment 2: Plot one draw from posterior with observation (x,y)=(0.4,0.719).
 
 xTest = seq(-1, 1, length=100)
 
@@ -40,7 +43,7 @@ plot(xTest, posteriorSim$mean, type="l",
 lines(xTest, posteriorSim$mean - 1.96*sqrt(diag(posteriorSim$var)), col = "gray", lwd = 2, lty=21)
 lines(xTest, posteriorSim$mean + 1.96*sqrt(diag(posteriorSim$var)), col = "gray", lwd = 2, lty=21)
 
-## 3. Now update posterior with two observations
+## Assignment 3: Now update posterior with two observations. 
 
 x=c(0.4, -0.6)
 y=c(0.719, -0.044)
@@ -53,7 +56,7 @@ plot(xTest, posteriorSim2$mean, type="l",
 lines(xTest, posteriorSim2$mean - 1.96*sqrt(diag(posteriorSim2$var)), col = "gray", lwd = 2, lty=21)
 lines(xTest, posteriorSim2$mean + 1.96*sqrt(diag(posteriorSim2$var)), col = "gray", lwd = 2, lty=21)
 
-## 4. Now use 5 observations and plot the posterior
+## Assignment 4: Now use 5 observations and plot the posterior.
 
 x=c(-1, -0.6, -0.2, 0.4, 0.8)
 y=c(0.768, -0.044, -0.940, 0.719, -0.664)
@@ -66,7 +69,7 @@ plot(xTest, posteriorSim2$mean, type="l",
 lines(xTest, posteriorSim2$mean - 1.96*sqrt(diag(posteriorSim2$var)), col = "gray", lwd = 2, lty=21)
 lines(xTest, posteriorSim2$mean + 1.96*sqrt(diag(posteriorSim2$var)), col = "gray", lwd = 2, lty=21)
 
-## 5. Repeat 4 with hyperparam sigmaF=1 and l=1
+## Assignment 5. Repeat 4 with hyperparam sigmaF=1 and l=1. Compare the results.
 
 sigmaF=1
 l=1
