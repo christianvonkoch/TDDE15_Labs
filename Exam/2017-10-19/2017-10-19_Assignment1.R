@@ -6,4 +6,14 @@
 ## want to use exact or approximate inference with the help of the bnlearn and gRain
 ## packages. (2.5 p)
 
+library(bnlearn)
+library(gRain)
+library(RBGL)
+library(Rgraphviz)
+data("asia")
 
+BNmodel=hc(asia)
+fit=bn.fit(BNmodel, asia)
+fitTable=as.grain(fit)
+fitTable_real=as.grain(fit_real)
+junctionTree=compile(fitTable)
