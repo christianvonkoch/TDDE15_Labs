@@ -62,7 +62,7 @@ kernelMatrix(kernel = SEkernel, x = X, y = Xstar) # So this is K(X,Xstar).
 ## of f as a curve (use type="l" in the plot function). Play around with different values on sigmaF and l.
 
 temp=data$temp[id]
-fit = lm(temp ~ time+time^2)
+fit = lm(scale(temp) ~ scale(time)+scale(time)^2)
 sigmaN=sd(fit$residuals)
 
 sigmaF=20
@@ -100,8 +100,8 @@ postVar = posterior$var
 postMean = posterior$mean
 plot(time, temp, type="p", main="Time vs temperature")
 lines(time, predictedMean, type="l", lwd=2, xlab="Time", ylab="Temp", col="red")
-lines(time, postMean*scale_var+scale_mean+1.96*sqrt(diag(postVar)), lwd=2, lty=2, col="blue")
-lines(time, postMean*scale_var+scale_mean-1.96*sqrt(diag(postVar)), lwd=2, lty=2, col="blue")
+lines(time, postMean*scale_var+scale_mean+1.96*(sqrt(diag(postVar))*scale_var), lwd=2, lty=2, col="blue")
+lines(time, postMean*scale_var+scale_mean-1.96*(sqrt(diag(postVar))*scale_var), lwd=2, lty=2, col="blue")
 legend("bottomright", legend=c("Data", "Predicted mean", "95% probability bands"), pch=c(1, NA, NA), lty=c(NA, 1, 2),
        lwd=c(NA, 2, 2), col=c("black", "red", "blue"))
 
