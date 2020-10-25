@@ -42,6 +42,7 @@ plot(xTest, posteriorSim$mean, type="l",
      sub="One observation as prior")
 lines(xTest, posteriorSim$mean - 1.96*sqrt(diag(posteriorSim$var)), col = "gray", lwd = 2, lty=21)
 lines(xTest, posteriorSim$mean + 1.96*sqrt(diag(posteriorSim$var)), col = "gray", lwd = 2, lty=21)
+points(obs$x, obs$y)
 
 ## Assignment 3: Now update posterior with two observations. 
 
@@ -55,6 +56,7 @@ plot(xTest, posteriorSim2$mean, type="l",
      sub="Two observations as prior")
 lines(xTest, posteriorSim2$mean - 1.96*sqrt(diag(posteriorSim2$var)), col = "gray", lwd = 2, lty=21)
 lines(xTest, posteriorSim2$mean + 1.96*sqrt(diag(posteriorSim2$var)), col = "gray", lwd = 2, lty=21)
+points(x, y)
 
 ## Assignment 4: Now use 5 observations and plot the posterior.
 
@@ -68,6 +70,8 @@ plot(xTest, posteriorSim2$mean, type="l",
      sub="Five observations as prior")
 lines(xTest, posteriorSim2$mean - 1.96*sqrt(diag(posteriorSim2$var)), col = "gray", lwd = 2, lty=21)
 lines(xTest, posteriorSim2$mean + 1.96*sqrt(diag(posteriorSim2$var)), col = "gray", lwd = 2, lty=21)
+points(x, y)
+
 
 ## Assignment 5. Repeat 4 with hyperparam sigmaF=1 and l=1. Compare the results.
 
@@ -80,3 +84,4 @@ plot(xTest, posteriorSim2$mean, type="l",
      sub=expression(paste("Five observations as prior and ", sigma[F], "=1 and l=1")))
 lines(xTest, posteriorSim2$mean - 1.96*sqrt(diag(posteriorSim2$var)), col = "gray", lwd = 2, lty=21)
 lines(xTest, posteriorSim2$mean + 1.96*sqrt(diag(posteriorSim2$var)), col = "gray", lwd = 2, lty=21)
+points(x, y)
